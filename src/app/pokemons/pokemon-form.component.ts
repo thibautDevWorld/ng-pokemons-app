@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core'; 
 import { Router } from '@angular/router'; 
-import { PokemonsService} from './pokemons.service'; 
+import { PokemonsService } from './pokemon.service';
 import { Pokemon } from './pokemon'; 
  
 @Component({ 
  selector: 'pokemon-form', 
- templateUrl: './pokemon-form.component.html'
+ templateUrl: './pokemon-form.component.html',
+ styleUrls: ['./pokemon-form.component.css']
 }) 
 export class PokemonFormComponent implements OnInit { 
  // propriété d'entrée du composant 
@@ -44,6 +45,25 @@ export class PokemonFormComponent implements OnInit {
    } 
   }  
  } 
+
+ // Valide le nombre de types pour chaque pokémon (entre 1 et 3)
+isTypesValid(type: string): boolean { 
+  
+    // Le pokémon a un seul type, qui correspond au type passé en paramètre.
+    // Dans ce cas on revoie false, car l'utilisateur ne doit pas pouvoir décoché ce type (sinon le pokémon aurait 0 type, ce qui est interdit)
+    if (this.pokemon.types.length === 1 && this.hasType(type)) {
+     return false;
+    }
+    
+    // Le pokémon a au moins 3 types.
+    // Dans ce cas il faut empêcher à l'utilisateur de cocher un nouveau type, mais pas de décocher les types existants.
+    if (this.pokemon.types.length >= 3 && !this.hasType(type)) { 
+     return false; 
+    } 
+    
+    // Après avoir passé les deux tests ci-dessus, on renvoie true, c'est à dire que l'on autorise l'utilisateur a cocher ou décocher un nouveau type.
+    return true; 
+   }
  
  // La méthode appelée lorsque le formulaire est soumis. 
  onSubmit(): void { 
