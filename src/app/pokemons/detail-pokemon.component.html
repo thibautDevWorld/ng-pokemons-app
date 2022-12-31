@@ -35,9 +35,16 @@
          </tbody> 
         </table> 
        </div> 
-       <div class="card-action"> 
-        <a (click)="goBack()">Retour</a> 
-        <a (click)="goEdit(pokemon)">Editer</a>
+       <div class="card-action">
+        <div class="col s3">
+          <a class="waves-effect waves-light btn" (click)="goBack()">Retour</a>
+        </div>
+        <div class="col s3">
+          <a class="waves-effect waves-light btn" (click)="goEdit(pokemon)">Editer</a>
+        </div>
+        <div class="col s3 btn-flat">
+          <a (click)="delete(pokemon)">Supprimer</a>
+        </div>
        </div> 
       </div> 
      </div> 
