@@ -41,9 +41,6 @@ export class PokemonsService {
          catchError(this.handleError<Pokemon>(`getPokemon id=${id}`))
         );
        }
-    
-   
-    
 
     getPokemonTypes(): Array<string> {
         return [
@@ -58,6 +55,17 @@ export class PokemonsService {
         return this.http.put(this.pokemonsUrl, pokemon, httpOptions).pipe( 
          tap(_ => this.log(`updated pokemon id=${pokemon.id}`)),
          catchError(this.handleError<any>('updatePokemon'))
+        );
+    }
+
+    addPokemon(pokemon: Pokemon): Observable<Pokemon> {
+        const httpOptions = {
+         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+        };
+        
+        return this.http.post<Pokemon>(this.pokemonsUrl, pokemon, httpOptions).pipe(
+         tap((pokemon: Pokemon) => this.log(`added pokemon with id=${pokemon.id}`)),
+         catchError(this.handleError<Pokemon>('addPokemon'))
         );
     }
 

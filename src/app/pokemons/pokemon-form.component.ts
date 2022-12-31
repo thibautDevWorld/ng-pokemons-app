@@ -12,7 +12,8 @@ export class PokemonFormComponent implements OnInit {
  // propriété d'entrée du composant 
  @Input() pokemon: Pokemon; 
  // types disponibles pour un pokémon : 'Eau', 'Feu', etc.
- types: Array<string>; 
+ types: Array<string>;
+ isAddForm: boolean;
  
  constructor( 
   private pokemonsService: PokemonsService, 
@@ -20,7 +21,8 @@ export class PokemonFormComponent implements OnInit {
  
  ngOnInit() { 
   // Initialisation de la propriété types 
-  this.types = this.pokemonsService.getPokemonTypes(); 
+  this.types = this.pokemonsService.getPokemonTypes();
+  this.isAddForm = this.router.url.includes('add')
  } 
  
  // Détermine si le type passé en paramètres appartient ou non 
@@ -66,8 +68,15 @@ isTypesValid(type: string): boolean {
    }
  
  // La méthode appelée lorsque le formulaire est soumis. 
- onSubmit(): void { 
-  this.pokemonsService.updatePokemon(this.pokemon).subscribe(() => this.goBack());
+ onSubmit(): void {
+  if (this.isAddForm) { // Le formulaire est en mode ajout.
+    this.pokemonsService.addPokemon(this.pokemon).subscribe(pokemon => {
+     this.pokemon = pokemon;
+     this.goBack();
+    });
+   } else { // Le formulaire est en mode édition.
+    this.pokemonsService.updatePokemon(this.pokemon).subscribe(_ => this.goBack());
+   }
  } 
  goBack() : void {
   let link = ['/pokemon', this.pokemon.id];
