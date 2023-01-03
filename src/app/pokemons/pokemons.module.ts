@@ -12,6 +12,7 @@ import { PokemonFormComponent } from './pokemon-form.component';
 import { PokemonsService } from './pokemon.service';
 import { AddPokemonComponent } from './add-pokemon.component';
 import { PokemonSearchComponent } from './search-pokemon.component';
+import { LoaderComponent } from '../loader.component';
  
 @NgModule({ 
  imports: [ 
@@ -27,7 +28,8 @@ import { PokemonSearchComponent } from './search-pokemon.component';
   PokemonFormComponent, 
   BorderCardDirective,
   PokemonTypeColorPipe,
-  PokemonSearchComponent
+  PokemonSearchComponent,
+  LoaderComponent
  ],
  providers: [PokemonsService]
 }) 
